@@ -3,7 +3,7 @@ import ColourConverter from './components/ColourConverter';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <ColourConverter />
     </div>
   );

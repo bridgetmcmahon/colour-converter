@@ -1,21 +1,54 @@
 import React, { useState } from "react"
-
-import { Container } from "./styles"
+import {
+    Background,
+    Container,
+    Inner,
+    Tab }
+from "./styles"
+import HexConverter from "./HexConverter"
+import RGBConverter from "./RGBConverter"
+import HSLConverter from "./HSLConverter"
 
 const ColourConverter = () => {
-    const [hexValue, setHexValue] = useState("")
-    const [rgbValue, setRgbValue] = useState("")
-    const [hslValue, setHslValue] = useState("")
+    const [activeFormat, setActiveFormat] = useState("hex")
+    const [colour, setColour] = useState("#000")
+
+    const renderConverter = () => {
+        if (activeFormat === "hex") {
+            return <HexConverter setColour={setColour} />
+        } else if (activeFormat === "rgb") {
+            return <RGBConverter setColour={setColour} />
+        } else if (activeFormat === "hsl") {
+            return <HSLConverter setColour={setColour} />
+        }
+    }
 
     return (
-        <Container>
-            <label>HEX:</label>
-            <input type="text" value={hexValue} onChange={e => setHexValue(e.target.value)} name="hex" />
-            <label>RGB:</label>
-            <input type="text" value={rgbValue} onChange={e => setRgbValue(e.target.value)} name="rgb" />
-            <label>HSL:</label>
-            <input type="text" value={hslValue} onChange={e => setHslValue(e.target.value)} name="hsl" />
-        </Container>
+        <Background colour={colour}>
+            <Container>
+                <Tab
+                    onClick={() => setActiveFormat("hex")}
+                    active={activeFormat === "hex"}
+                >
+                    HEX
+                </Tab>
+                <Tab
+                    onClick={() => setActiveFormat("rgb")}
+                    active={activeFormat === "rgb"}
+                >
+                    RGB
+                </Tab>
+                <Tab
+                    onClick={() => setActiveFormat("hsl")}
+                    active={activeFormat === "hsl"}
+                >
+                    HSL
+                </Tab>
+                <Inner>
+                    {renderConverter()}
+                </Inner>
+            </Container>
+        </Background>
     )
 }
 
